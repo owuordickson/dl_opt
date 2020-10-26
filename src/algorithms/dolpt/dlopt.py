@@ -15,13 +15,14 @@ import time
 from .daemon import Daemon
 
 
-class DlOpt:
+class DlOpt(Daemon):
 
-    def __init__(self):
-        self.jobs = np.array([])
-        self.demands = np.array([])
+    def __init__(self, jobs):
+        self.jobs = jobs
         self.a_matrix = np.array([])
-        self.cost_matrix = np.array([])
+        # self.demands = np.array([])  # to be sent randomly
+        # self.cost_matrix = np.array([])
+        # self.job_status = np.array([])
 
     def run(self):
         while True:
@@ -29,8 +30,8 @@ class DlOpt:
             time.sleep(1)
 
 
-class DlService(Daemon):
-    def run(self):
+# class DlService(Daemon):  # to be removed
+#    def run(self):  # implemented in DlOpt
         # Or simply merge your code with MyDaemon.
-        your_code = DlOpt()
-        your_code.run()
+#        your_code = DlOpt()
+#        your_code.run()

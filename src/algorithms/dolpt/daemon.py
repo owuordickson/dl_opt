@@ -2,7 +2,7 @@
 """
 
 Generic linux daemon base class for python 3.x.
-source: http://www.jejik.com/files/examples/daemon.py
+source: http://www.jejik.com/files/examples/daemon3x.py
 
 """
 

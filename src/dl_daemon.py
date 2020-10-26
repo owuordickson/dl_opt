@@ -15,7 +15,7 @@ Description:
 """
 
 import sys
-from algorithms.dolpt.dlopt import DlService
+from algorithms.dolpt.dlopt import DlOpt
 
 
 def write_file(data, path):
@@ -25,7 +25,7 @@ def write_file(data, path):
 
 
 if __name__ == "__main__":
-    daemon = DlService('/tmp/daemon-example.pid')
+    daemon = DlOpt('/tmp/daemon-example.pid')
     if len(sys.argv) == 2:
         if 'start' == sys.argv[1]:
             daemon.start()
