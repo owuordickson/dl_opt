@@ -17,11 +17,20 @@ Description:
 import sys
 from optparse import OptionParser
 from algorithms.dolpt.dlopt import DlOpt
+from algorithms.dl_job.u_demand import Demand
 
 
 def init_algorithm(f_path):
     try:
         opt = DlOpt(f_path)
+
+        jb1 = opt.jobs[0]
+        d1 = Demand(2)
+        opt.update_ab(jb1, d1)
+        d1 = jb1.work(d1)
+        print("\n\n")
+        opt.update_ab(jb1, d1)
+
         wr_line = "Algorithm: DL-OPT \n"
         return wr_line
     except Exception as error:

@@ -21,13 +21,22 @@ class Dl_Job:
         # self.cost = self.calculate_cost()
         self.cost = cost
         self.status = True
+        self.demands = []
+        self.last_time = -1
 
     # def calculate_cost(self):
     #    cost = self.cpus + self.mem_size
     #    return cost
 
     def work(self, demand):
-        self.status = False
-        delay = demand.task  # in seconds
-        time.sleep(delay)
+        start = time.time()
+        if demand.status is 'incomplete':
+            self.status = False
+            delay = demand.task  # in seconds
+            time.sleep(delay)
+            demand.status = 'complete'
+            self.demands.append(demand)
         self.status = True
+        end = time.time()
+        self.last_time = (end - start)
+        return demand
