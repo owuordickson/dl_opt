@@ -29,7 +29,7 @@ class Dl_Server:
         print("server initialized ...")
         self.jobs = self.init_jobs()
         self.a_matrix = np.ones(len(self.jobs), dtype=float)
-        print("jobs created ...")
+        print(str(len(self.jobs)) + " jobs created ...")
 
     def init_jobs(self):
         jobs = []
@@ -58,7 +58,9 @@ class Dl_Server:
         while self.running:
             #  Wait for next request from client
             message = self.socket.recv()
-            print("Received request: " + str(message))
+            print("Received request: " + str(message.decode()))
+            print("running")
+            print("checking new demands - allocate to jobs")
             time.sleep(1)
             self.socket.send_string("World from %s" % self.PORT)
 
