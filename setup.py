@@ -21,12 +21,12 @@ test_requirements = [
 
 
 setup(
-    name='DLOPT',
+    name='DL-OPT',
     version='1.0',
     description="A Python implementation of Data Lake Optimization algorithm.",
     long_description=readme + '\n\n' + history,
-    author="Dickson Owuor",
-    author_email='owuordickson@ieee.org',
+    author="Marziye Derakhshannia and Dickson Owuor",
+    author_email='dm.derakhshannia@gmail.com',
     url='https://github.com/owuordickson/dl_opt',
     packages=find_packages(),
     #package_dir={'dlopt':'dlopt'},
