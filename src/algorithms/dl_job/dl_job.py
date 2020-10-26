@@ -8,15 +8,26 @@
 
 """
 
+import time
+from .u_demand import Demand
+
 
 class Dl_Job:
 
-    def __init__(self, mem, cpus):
-        self.mem_size = mem
-        self.cpus = cpus
-        self.cost = self.calculate_cost()
+    def __init__(self, name, cost, mem=None, cpus=None):
+        self.name = name
+        # self.mem_size = mem
+        # self.cpus = cpus
+        # self.cost = self.calculate_cost()
+        self.cost = cost
         self.status = True
 
-    def calculate_cost(self):
-        cost = self.cpus + self.mem_size
-        return cost
+    # def calculate_cost(self):
+    #    cost = self.cpus + self.mem_size
+    #    return cost
+
+    def work(self, demand):
+        self.status = False
+        delay = demand.task  # in seconds
+        time.sleep(delay)
+        self.status = True

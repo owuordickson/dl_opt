@@ -21,7 +21,7 @@ from algorithms.dolpt.dlopt import DlOpt
 
 def init_algorithm(f_path):
     try:
-        opt = DlOpt()
+        opt = DlOpt(f_path)
         wr_line = "Algorithm: DL-OPT \n"
         return wr_line
     except Exception as error:
@@ -46,8 +46,8 @@ if __name__ == "__main__":
                              dest='file',
                              help='path to file containing csv',
                              # default=None,
-                             default='../data/test_file.csv',
-                             # default='../data/Directio.csv',
+                             default='../data/job_cost.csv',
+                             # default='../data/test.csv',
                              type='string')
 
         (options, args) = optparser.parse_args()
