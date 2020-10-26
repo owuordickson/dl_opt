@@ -6,17 +6,12 @@ import zmq
 
 class Dl_Client:
 
-    def __init__(self, pt):
-        self.PORT = pt
-        # if len(sys.argv) > 1:
-        #    port = sys.argv[1]
-        #    int(port)
+    def __init__(self, port):
+        self.PORT = port
         context = zmq.Context()
         print("Connecting to server...")
         self.socket = context.socket(zmq.REQ)
         self.socket.connect("tcp://localhost:%s" % self.PORT)
-        # if len(sys.argv) > 2:
-        #    socket.connect("tcp://localhost:%s" % port1)
 
     def send_req(self, request):
         print("Sending request ", request, "...")
@@ -35,8 +30,8 @@ def init_client(pt="5556"):
 if __name__ == "__main__":
     if len(sys.argv) >= 1:
         if len(sys.argv) == 2:
-            port = sys.argv[1]
-            init_client(port)
+            prt = sys.argv[1]
+            init_client(prt)
         else:
             init_client()
 

@@ -7,18 +7,17 @@ import sys
 
 class Dl_Server:
 
-    def __init__(self, pt="5556"):
-        self.PORT = pt
-        # if len(sys.argv) > 1:
-        #    port = sys.argv[1]
-        #    int(port)
+    def __init__(self, port="5556"):
+        self.PORT = port
+        self.running = True
         context = zmq.Context()
         self.socket = context.socket(zmq.REP)
         self.socket.bind("tcp://*:%s" % self.PORT)
-        # socket.bind("tcp://*:%s" % self.PORT)
+        print("server initialized")
 
     def start(self):
-        while True:
+        print("server running ...")
+        while self.running:
             #  Wait for next request from client
             message = self.socket.recv()
             print("Received request: " + str(message))
@@ -29,16 +28,16 @@ class Dl_Server:
 if __name__ == "__main__":
     if len(sys.argv) >= 2:
         if len(sys.argv) == 3:
-            port = sys.argv[2]
-            server = Dl_Server(port)
+            prt = sys.argv[2]
+            server = Dl_Server(prt)
         else:
             server = Dl_Server()
         if 'start' == sys.argv[1]:
             server.start()
-        elif 'stop' == sys.argv[1]:
-            server.stop()
-        elif 'restart' == sys.argv[1]:
-            server.restart()
+        # elif 'stop' == sys.argv[1]:
+        #    server.stop()
+        # elif 'restart' == sys.argv[1]:
+        #    server.restart()
         else:
             print("Unknown command")
             sys.exit(2)
