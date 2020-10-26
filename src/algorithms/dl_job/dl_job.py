@@ -39,4 +39,5 @@ class Dl_Job:
         self.status = True
         end = time.time()
         self.last_time = (end - start)
+        demand.elapsed_time = self.last_time
         return demand

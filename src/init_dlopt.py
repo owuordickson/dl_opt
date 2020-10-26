@@ -22,7 +22,8 @@ from algorithms.dl_job.u_demand import Demand
 
 def init_algorithm(f_path):
     try:
-        opt = DlOpt(f_path)
+        pidfile = '/tmp/daemon-example.pid'
+        opt = DlOpt(pidfile, f_path)
 
         jb1 = opt.jobs[0]
         d1 = Demand(2)

@@ -25,14 +25,21 @@ def write_file(data, path):
 
 
 if __name__ == "__main__":
-    daemon = DlOpt('/tmp/daemon-example.pid')
-    if len(sys.argv) == 2:
-        if 'start' == sys.argv[1]:
+    pidfile = '/tmp/daemon-example.pid'
+    # jobfile = './data/job_cost.csv'
+    # daemon = DlOpt(pidfile, jobfile)
+    print(sys.argv)
+    if len(sys.argv) >= 3:
+        jb_path = sys.argv[1]
+        daemon = DlOpt(pidfile, jb_path)
+        if 'start' == sys.argv[2]:
             daemon.start()
-        elif 'stop' == sys.argv[1]:
+        elif 'stop' == sys.argv[2]:
             daemon.stop()
-        elif 'restart' == sys.argv[1]:
+        elif 'restart' == sys.argv[2]:
             daemon.restart()
+        elif 'allocate' == sys.argv[2]:
+            daemon.allocate()
         else:
             print("Unknown command")
             sys.exit(2)

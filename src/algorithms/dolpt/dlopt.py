@@ -20,7 +20,8 @@ from ..dl_job.u_demand import Demand
 
 class DlOpt(Daemon):
 
-    def __init__(self, file):
+    def __init__(self, pidfile, file):
+        super().__init__(pidfile)
         self.jobs = self.init_jobs(file)
         self.a_matrix = np.ones(len(self.jobs), dtype=float)
         # print(self.update_ab(self.jobs[0], Demand(2)))
