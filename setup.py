@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-try:
-    from setuptools import setup, find_packages
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup, find_packages
 
 with open('README.md') as readme_file:
     readme = readme_file.read()
@@ -29,7 +26,7 @@ setup(
     author_email='dm.derakhshannia@gmail.com',
     url='https://github.com/owuordickson/dl_opt',
     packages=find_packages(),
-    #package_dir={'dlopt':'dlopt'},
+    # package_dir={'dlopt':'dlopt'},
     include_package_data=True,
     install_requires=requirements,
     license="MIT",

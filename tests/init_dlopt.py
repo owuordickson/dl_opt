@@ -16,7 +16,7 @@ Description:
 
 import sys
 from optparse import OptionParser
-from algorithms.dolpt.dlopt import DlOpt
+from algorithms.dl_opt.dlopt import DlOpt
 from algorithms.dl_job.u_demand import Demand
 
 

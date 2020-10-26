@@ -15,7 +15,7 @@ Description:
 """
 
 import sys
-from algorithms.dolpt.dlopt import DlOpt
+from algorithms.dl_opt.dlopt import DlOpt
 
 
 def write_file(data, path):
