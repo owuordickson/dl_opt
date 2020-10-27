@@ -24,7 +24,7 @@ $python3 src/init_server.py data/job_cost.csv
 
 To submit jobs:<br>
 
-* 20 is the size of the task (pick any integer number)
+* 20 is the size of the task (pick any integer number and send as many requests to the server as possible)
 
 ```
 $python3 src/run_client.py 20 
