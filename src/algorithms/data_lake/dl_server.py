@@ -89,8 +89,11 @@ class Dl_Server:
             if 'jb' in message:
                 # acknowledge job complete and update matrix
                 # self.update_ab(jb1, d1)
+                end = time.time()
                 idx = int(message.strip(string.ascii_letters))
-                self.jobs[idx].status = True  # add to available jobs
+                jb = self.jobs[idx]
+                self.update_ab(jb)
+                jb.status = True  # add to available jobs
                 print(str(message) + " (server) updated!")
                 self.socket.send_string("ACK")
             else:
@@ -106,9 +109,10 @@ class Dl_Server:
                 else:
                     # Now we can connect a client to all the demands
                     # Process(target=self.work, args=([jb_idx, d1],)).start()
-                    print("chosen index: " + str(jb_idx))
+                    print("chosen job index: " + str(jb_idx))
                     jb = self.jobs[jb_idx]
                     jb.status = False  # remove from available jobs
+                    jb.last_time = time.time()
                     Process(target=jb.work, args=(d1,)).start()
 
                     self.socket.send_string("World from %s" % self.PORT)

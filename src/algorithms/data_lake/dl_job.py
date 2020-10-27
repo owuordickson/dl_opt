@@ -33,13 +33,13 @@ class Dl_Job(Dl_Client):
 
     def work(self, demand):
         super().__init__(self.port)
-        start = time.time()
+        # start = time.time()
         if demand.status is 'incomplete':
             # initiate task
             self.demands.append(demand)
             self.run()
-        end = time.time()
-        self.last_time = (end - start)
+        # end = time.time()
+        # self.last_time = (end - start)
         print(str(self.name) + " (client) completed work ...")
         self.socket.send_string(self.name)
         #  Get the reply.
