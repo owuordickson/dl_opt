@@ -48,7 +48,6 @@ class Dl_Server:
                 name = 'jb' + str(i)
                 jb = Dl_Job(name, int(obj[cst_idx]), self.PORT)
                 jobs.append(jb)
-                # print(jb.name)
         return jobs
 
     def update_ab(self, job, demand):

@@ -9,16 +9,12 @@
 """
 
 import time
-from ..common.daemon import Daemon
 from .dl_client import Dl_Client
-from .u_demand import Demand
 
 
 class Dl_Job(Dl_Client):
 
     def __init__(self, name, cost, port, mem=None, cpus=None):
-        # super().__init__(port)
-        # self.pidfile = '/tmp/daemon-job' + str(name) + '.pid'
         self.port = port
         self.name = name
         self.cost = cost
@@ -26,7 +22,6 @@ class Dl_Job(Dl_Client):
         self.running = True
         self.demands = []
         self.last_time = -1
-        # super().__init__(self.pidfile)
         # self.mem_size = mem
         # self.cpus = cpus
         # self.cost = self.calculate_cost()
@@ -34,12 +29,6 @@ class Dl_Job(Dl_Client):
     # def calculate_cost(self):
     #    cost = self.cpus + self.mem_size
     #    return cost
-
-    # def initiate(self):
-    #    while self.running:
-            #  Wait for next request from client
-    #        temp = self.socket.recv()
-    #        msg = temp.decode()
 
     def work(self, demand):
         super().__init__(self.port)
@@ -60,7 +49,6 @@ class Dl_Job(Dl_Client):
     def run(self):
         print(str(self.name) + " (client) starting work ...")
         # do work
-
         demand = self.demands[-1]  # last item to be stored
         delay = demand.task  # in seconds
         time.sleep(delay)
