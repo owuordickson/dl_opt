@@ -67,7 +67,6 @@ class Dl_Server:
                 a = self.a_matrix[idx]
                 cost = 1 / jb.cost
                 y = y + (cost * (a / np.sum(self.a_matrix)))
-                print("chosen index: " + str(idx))
                 if y >= x:
                     # return self.jobs[idx]
                     return idx
@@ -85,8 +84,8 @@ class Dl_Server:
             temp = self.socket.recv()
             message = temp.decode()
             time.sleep(1)
-            for jb_o in self.jobs:
-                print(jb_o.status)
+            # for jb_o in self.jobs:
+            #    print(jb_o.status)
             if 'jb' in message:
                 # acknowledge job complete and update matrix
                 # self.update_ab(jb1, d1)
@@ -107,6 +106,7 @@ class Dl_Server:
                 else:
                     # Now we can connect a client to all the demands
                     # Process(target=self.work, args=([jb_idx, d1],)).start()
+                    print("chosen index: " + str(jb_idx))
                     jb = self.jobs[jb_idx]
                     jb.status = False  # remove from available jobs
                     Process(target=jb.work, args=(d1,)).start()

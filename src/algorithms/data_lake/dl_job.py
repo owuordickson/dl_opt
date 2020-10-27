@@ -50,7 +50,19 @@ class Dl_Job(Dl_Client):
         print(str(self.name) + " (client) starting work ...")
         # do work
         demand = self.demands[-1]  # last item to be stored
-        delay = demand.task  # in seconds
+        delay = float(self.simulated_efficiency() * demand.task)  # in seconds
         time.sleep(delay)
         demand.status = 'complete'
 
+    def simulated_efficiency(self):
+        if self.index == 0:
+            eff = 0.8
+        elif self.index == 1:
+            eff = 0.5
+        elif self.index == 2:
+            eff = 0.25
+        elif self.index == 3:
+            eff = 0.1
+        else:
+            eff = 1
+        return eff
