@@ -72,9 +72,10 @@ class Dl_Server:
                     return idx
         return idx
 
-    def update_ab(self, job):
-        print(job.cost)
-        print(job.last_time)
+    def update_ab(self, job, end_time):
+        elapsed = end_time - job.last_time
+        job.last_time = elapsed
+        self.a_matrix[job.index] += 1
         print(self.a_matrix)
 
     def start(self):
@@ -92,7 +93,7 @@ class Dl_Server:
                 end = time.time()
                 idx = int(message.strip(string.ascii_letters))
                 jb = self.jobs[idx]
-                self.update_ab(jb)
+                self.update_ab(jb, end)
                 jb.status = True  # add to available jobs
                 print(str(message) + " (server) updated!")
                 self.socket.send_string("ACK")
@@ -115,4 +116,4 @@ class Dl_Server:
                     jb.last_time = time.time()
                     Process(target=jb.work, args=(d1,)).start()
 
-                    self.socket.send_string("World from %s" % self.PORT)
+                    self.socket.send_string("Demand allocated to job " + jb.name)
