@@ -13,10 +13,13 @@ Description: greedy heuristic algorithm that optimizes data lake jobs
 import zmq
 import time
 import numpy as np
-from  multiprocessing import Process
+import random as rand
+import string
+from multiprocessing import Process
 from ..common.read_data import FileData
 from .dl_job import Dl_Job
 from .u_demand import Demand
+from .dl_client import Dl_Client
 
 
 class Dl_Server:
@@ -31,6 +34,7 @@ class Dl_Server:
         print("server initialized ...")
         self.jobs = self.init_jobs()
         self.a_matrix = np.ones(len(self.jobs), dtype=float)
+        self.available = np.ones(len(self.jobs), dtype=bool)
         print(str(len(self.jobs)) + " jobs created ...")
 
     def init_jobs(self):
@@ -46,14 +50,31 @@ class Dl_Server:
             for i in range(len(fd.data)):
                 obj = fd.data[i]
                 name = 'jb' + str(i)
-                jb = Dl_Job(name, int(obj[cst_idx]), self.PORT)
+                jb = Dl_Job(i, name, int(obj[cst_idx]), self.PORT)
                 jobs.append(jb)
         return jobs
 
-    def update_ab(self, job, demand):
+    def choose_job(self):
+        idx = -1
+        y = 0
+        x = float(rand.randint(1, 10) / 10)
+        # print("random: " + str(x))
+        # for i in range(len(self.available)):
+        for jb in self.jobs:
+            if jb.status:  # self.available[i]:
+                # idx = i
+                idx = jb.index
+                a = self.a_matrix[idx]
+                y = y + (a / np.sum(self.a_matrix))
+                print("chosen index: " + str(idx))
+                if y >= x:
+                    # return self.jobs[idx]
+                    return idx
+        return idx
+
+    def update_ab(self, job):
         print(job.cost)
         print(job.last_time)
-        print(demand.status)
         print(self.a_matrix)
 
     def start(self):
@@ -63,9 +84,13 @@ class Dl_Server:
             temp = self.socket.recv()
             message = temp.decode()
             time.sleep(1)
+            for jb_o in self.jobs:
+                print(jb_o.status)
             if 'jb' in message:
                 # acknowledge job complete and update matrix
                 # self.update_ab(jb1, d1)
+                idx = int(message.strip(string.ascii_letters))
+                self.jobs[idx].status = True  # add to available jobs
                 print(str(message) + " (server) updated!")
                 self.socket.send_string("ACK")
             else:
@@ -75,10 +100,14 @@ class Dl_Server:
                 d1 = Demand(delay)
 
                 print("checking new demands - allocate to jobs")
-                # Now we can connect a client to all the demands
-                # Process(target=jb1.work, args=([d1],)).start()
-                jb1 = self.jobs[0]
-                Process(target=jb1.work, args=(d1,)).start()
+                jb_idx = self.choose_job()  # jb1 = self.jobs[0]
+                if jb_idx == -1:
+                    self.socket.send_string("All jobs are busy")
+                else:
+                    # Now we can connect a client to all the demands
+                    # Process(target=self.work, args=([jb_idx, d1],)).start()
+                    jb = self.jobs[jb_idx]
+                    jb.status = False  # remove from available jobs
+                    Process(target=jb.work, args=(d1,)).start()
 
-                self.socket.send_string("World from %s" % self.PORT)
-
+                    self.socket.send_string("World from %s" % self.PORT)

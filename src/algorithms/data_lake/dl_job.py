@@ -14,7 +14,8 @@ from .dl_client import Dl_Client
 
 class Dl_Job(Dl_Client):
 
-    def __init__(self, name, cost, port, mem=None, cpus=None):
+    def __init__(self, index, name, cost, port, mem=None, cpus=None):
+        self.index = index
         self.port = port
         self.name = name
         self.cost = cost
@@ -34,7 +35,6 @@ class Dl_Job(Dl_Client):
         super().__init__(self.port)
         start = time.time()
         if demand.status is 'incomplete':
-            self.status = False
             # initiate task
             self.demands.append(demand)
             self.run()
@@ -53,5 +53,4 @@ class Dl_Job(Dl_Client):
         delay = demand.task  # in seconds
         time.sleep(delay)
         demand.status = 'complete'
-        self.status = True
 
