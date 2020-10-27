@@ -21,9 +21,6 @@ class Daemon:
     def __init__(self, pidfile):
         self.pidfile = pidfile
 
-    def set_pid(self, pidfile):
-        self.pidfile = pidfile
-
     def daemonize(self):
         """Deamonize class. UNIX double fork mechanism."""
 

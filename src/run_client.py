@@ -6,34 +6,15 @@
 @email: "dm.derakhshannia@gmail.com or owuordickson@gmail.com "
 @created: "26 October 2020"
 
-Description: greedy heuristic algorithm that optimizes data lake jobs
-
 """
 
 import sys
-import zmq
-
-
-class Dl_Client:
-
-    def __init__(self, port):
-        self.PORT = port
-        context = zmq.Context()
-        print("Connecting to server...")
-        self.socket = context.socket(zmq.REQ)
-        self.socket.connect("tcp://localhost:%s" % self.PORT)
-
-    def send_req(self, request):
-        print("Sending request ", request, "...")
-        self.socket.send_string("Hello")
-        #  Get the reply.
-        message = self.socket.recv()
-        print("Received reply ", request, "[", message.decode(), "]")
+from algorithms.data_lake.dl_client import Dl_Client
 
 
 def init_client(pt="5556"):
     cli = Dl_Client(pt)
-    for req in range(1, 10):
+    for req in range(1, 2):
         cli.send_req(req)
 
 

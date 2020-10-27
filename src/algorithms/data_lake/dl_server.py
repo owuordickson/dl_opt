@@ -13,8 +13,10 @@ Description: greedy heuristic algorithm that optimizes data lake jobs
 import zmq
 import time
 import numpy as np
+from  multiprocessing import Process
 from ..common.read_data import FileData
 from .dl_job import Dl_Job
+from .u_demand import Demand
 
 
 class Dl_Server:
@@ -41,8 +43,10 @@ class Dl_Server:
                 cst_idx = k
         if cst_idx > 0:
             # print(fd.data)
-            for obj in fd.data:
-                jb = Dl_Job(obj[0], int(obj[cst_idx]))
+            for i in range(len(fd.data)):
+                obj = fd.data[i]
+                name = 'jb' + str(i)
+                jb = Dl_Job(name, int(obj[cst_idx]), self.PORT)
                 jobs.append(jb)
                 # print(jb.name)
         return jobs
@@ -54,13 +58,26 @@ class Dl_Server:
         print(self.a_matrix)
 
     def start(self):
-        print("server running ...")
+        print("server is running ...")
         while self.running:
             #  Wait for next request from client
-            message = self.socket.recv()
-            print("Received request: " + str(message.decode()))
-            print("running")
-            print("checking new demands - allocate to jobs")
+            temp = self.socket.recv()
+            message = temp.decode()
             time.sleep(1)
-            self.socket.send_string("World from %s" % self.PORT)
+            if 'jb' in message:
+                # acknowledge job complete and update matrix
+                # self.update_ab(jb1, d1)
+                print(str(message) + " (server) updated!")
+                self.socket.send_string("ACK")
+            else:
+                # new user demand
+                print("Received request: " + str(message))
+                print("checking new demands - allocate to jobs")
+                jb1 = self.jobs[0]
+                d1 = Demand(2)
+                # Now we can connect a client to all the demands
+                # Process(target=jb1.work, args=([d1],)).start()
+                Process(target=jb1.work, args=(d1,)).start()
+
+                self.socket.send_string("World from %s" % self.PORT)
 
