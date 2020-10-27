@@ -65,7 +65,8 @@ class Dl_Server:
                 # idx = i
                 idx = jb.index
                 a = self.a_matrix[idx]
-                y = y + (a / np.sum(self.a_matrix))
+                cost = 1 / jb.cost
+                y = y + (cost * (a / np.sum(self.a_matrix)))
                 print("chosen index: " + str(idx))
                 if y >= x:
                     # return self.jobs[idx]

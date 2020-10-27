@@ -18,7 +18,7 @@ class Dl_Job(Dl_Client):
         self.index = index
         self.port = port
         self.name = name
-        self.cost = cost
+        self.cost = cost  # specs
         self.status = True
         self.running = True
         self.demands = []
