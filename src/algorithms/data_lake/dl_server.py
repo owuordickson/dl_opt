@@ -70,12 +70,14 @@ class Dl_Server:
                 self.socket.send_string("ACK")
             else:
                 # new user demand
-                print("Received request: " + str(message))
+                print("Received demand: " + str(message))
+                delay = int(message)
+                d1 = Demand(delay)
+
                 print("checking new demands - allocate to jobs")
-                jb1 = self.jobs[0]
-                d1 = Demand(2)
                 # Now we can connect a client to all the demands
                 # Process(target=jb1.work, args=([d1],)).start()
+                jb1 = self.jobs[0]
                 Process(target=jb1.work, args=(d1,)).start()
 
                 self.socket.send_string("World from %s" % self.PORT)

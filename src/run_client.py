@@ -12,20 +12,20 @@ import sys
 from algorithms.data_lake.dl_client import Dl_Client
 
 
-def init_client(pt="5556"):
-    cli = Dl_Client(pt)
-    for req in range(1, 2):
-        cli.send_req(req)
+def init_client(dl, port="5556"):
+    cli = Dl_Client(port)
+    cli.send_req(dl)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) >= 1:
-        if len(sys.argv) == 2:
-            prt = sys.argv[1]
-            init_client(prt)
+    if len(sys.argv) >= 2:
+        if len(sys.argv) == 3:
+            delay = sys.argv[1]
+            prt = sys.argv[2]
+            init_client(delay, prt)
         else:
-            init_client()
-
+            delay = sys.argv[1]
+            init_client(delay)
         # if 'start' == sys.argv[1]:
         #    server.start()
         # else:
@@ -33,5 +33,5 @@ if __name__ == "__main__":
         #    sys.exit(2)
         sys.exit(0)
     else:
-        print("usage: %s ..." % sys.argv[0])
+        print("usage: %s delay port" % sys.argv[0])
         sys.exit(2)

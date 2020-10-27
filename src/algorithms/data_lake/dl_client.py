@@ -23,8 +23,8 @@ class Dl_Client:
         self.socket.connect("tcp://localhost:%s" % self.PORT)
 
     def send_req(self, request):
-        print("Sending request ", request, "...")
-        self.socket.send_string("Hello")
+        print("Sending demand ", request, "...")
+        self.socket.send_string(request)
         #  Get the reply.
         message = self.socket.recv()
         print("Received reply ", request, "[", message.decode(), "]")
