@@ -40,13 +40,15 @@ class Dl_Job(Dl_Client):
             self.run()
         # end = time.time()
         # self.last_time = (end - start)
-        print(str(self.name) + " (client) completed work ...")
+        print(str(self.name) + " (client) completed work.")
         self.socket.send_string(self.name)
         #  Get the reply.
-        temp = self.socket.recv()
-        print(str(self.name) + " (client) " + str(temp.decode()) + " & disconnected")
+        # temp = self.socket.recv()
+        # print(str(self.name) + " (client) " + str(temp.decode()) + " & disconnected")
+        print(str(self.name) + " (client) " + "disconnected.")
 
     def run(self):
+        print(str(self.name) + " (client) connected to server!")
         print(str(self.name) + " (client) starting work ...")
         # do work
         demand = self.demands[-1]  # last item to be stored

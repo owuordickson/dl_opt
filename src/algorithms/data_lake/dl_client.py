@@ -18,7 +18,7 @@ class Dl_Client:
     def __init__(self, port):
         self.PORT = port
         context = zmq.Context()
-        print("Connecting to server...")
+        print("Connecting (client) to server...")
         self.socket = context.socket(zmq.REQ)
         self.socket.connect("tcp://localhost:%s" % self.PORT)
 

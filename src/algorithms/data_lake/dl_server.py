@@ -31,11 +31,11 @@ class Dl_Server:
         context = zmq.Context()
         self.socket = context.socket(zmq.REP)
         self.socket.bind("tcp://*:%s" % self.PORT)
-        print("server initialized ...")
+        print("server initialized!")
         self.jobs = self.init_jobs()
         self.a_matrix = np.ones(len(self.jobs), dtype=float)
         self.available = np.ones(len(self.jobs), dtype=bool)
-        print(str(len(self.jobs)) + " jobs created ...")
+        print(str(len(self.jobs)) + " jobs created.")
 
     def init_jobs(self):
         jobs = []
