@@ -20,7 +20,7 @@ def init_client(n, port="5556"):
     dl = "20"
     for i in range(int(n)):
         cli.send_req(dl)
-        x = float(rand.randint(1, 4) / 100)
+        x = 0.04  # float(rand.randint(1, 10) / 100)
         w = x * float(dl)
         time.sleep(w)
 
