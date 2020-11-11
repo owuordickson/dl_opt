@@ -33,7 +33,10 @@ if __name__ == "__main__":
             init_client(size, prt)
         else:
             size = sys.argv[1]
+            start = time.time()
             init_client(size)
+            end = time.time()
+            print("Elapsed time: " + str(end - start))
         # if 'start' == sys.argv[1]:
         #    server.start()
         # else:
