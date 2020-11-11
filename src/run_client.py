@@ -13,11 +13,12 @@ import time
 from algorithms.data_lake.dl_client import Dl_Client
 
 
-def init_client(dl, port="5556"):
+def init_client(n, port="5556"):
     cli = Dl_Client(port)
     # cli.send_req(dl)
-    w = 0.1 * float(dl)
-    for i in range(100):
+    dl = "20"
+    w = 0.04 * float(dl)
+    for i in range(int(n)):
         cli.send_req(dl)
         time.sleep(w)
 
@@ -25,12 +26,12 @@ def init_client(dl, port="5556"):
 if __name__ == "__main__":
     if len(sys.argv) >= 2:
         if len(sys.argv) == 3:
-            delay = sys.argv[1]
+            size = sys.argv[1]
             prt = sys.argv[2]
-            init_client(delay, prt)
+            init_client(size, prt)
         else:
-            delay = sys.argv[1]
-            init_client(delay)
+            size = sys.argv[1]
+            init_client(size)
         # if 'start' == sys.argv[1]:
         #    server.start()
         # else:
