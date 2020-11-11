@@ -27,5 +27,5 @@ class Dl_Client:
         self.socket.send_string(request)
         #  Get the reply.
         message = self.socket.recv()
-        print("Received reply ", request, "[", message.decode(), "]")
+        print("Received reply: ", "[", message.decode(), "]")
 

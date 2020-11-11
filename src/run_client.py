@@ -9,12 +9,17 @@
 """
 
 import sys
+import time
 from algorithms.data_lake.dl_client import Dl_Client
 
 
 def init_client(dl, port="5556"):
     cli = Dl_Client(port)
-    cli.send_req(dl)
+    # cli.send_req(dl)
+    w = 0.1 * float(dl)
+    for i in range(100):
+        cli.send_req(dl)
+        time.sleep(w)
 
 
 if __name__ == "__main__":
