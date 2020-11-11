@@ -10,6 +10,7 @@
 
 import sys
 import time
+import random as rand
 from algorithms.data_lake.dl_client import Dl_Client
 
 
@@ -17,9 +18,10 @@ def init_client(n, port="5556"):
     cli = Dl_Client(port)
     # cli.send_req(dl)
     dl = "20"
-    w = 0.04 * float(dl)
     for i in range(int(n)):
         cli.send_req(dl)
+        x = float(rand.randint(1, 4) / 100)
+        w = x * float(dl)
         time.sleep(w)
 
 
