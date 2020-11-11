@@ -1,5 +1,5 @@
 job memory cpus cost
 j0 2 4 3
-j1 4 2 5
-j2 2 1 1
+j1 4 2 1
+j2 2 1 5
 j3 8 6 10

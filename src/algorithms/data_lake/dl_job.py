@@ -58,13 +58,13 @@ class Dl_Job(Dl_Client):
 
     def simulated_efficiency(self):
         if self.index == 0:
-            eff = 0.8
-        elif self.index == 1:
-            eff = 0.5
-        elif self.index == 2:
             eff = 0.25
-        elif self.index == 3:
+        elif self.index == 1:
+            eff = 0.8
+        elif self.index == 2:
             eff = 0.1
+        elif self.index == 3:
+            eff = 0.5
         else:
             eff = 1
         return eff
