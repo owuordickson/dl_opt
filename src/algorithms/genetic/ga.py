@@ -31,6 +31,22 @@ def run(problem, params):
     empty_individual.position = None
     empty_individual.cost = None
 
+    # BestSolution Ever Found
+    bestsol = empty_individual.deepcopy()
+
+    # Initialize Population
+    pop = empty_individual.repeat(npop)
+    for i in range(0, npop):
+        pop[i].position = np.random.uniform(varmin, varmax, nvar)
+        pop[i].cost = costfunc(pop[i].position)
+
+    # Output
+    out = structure()
+    out.pop = pop
+    return out
+
+
+
 
 
 
