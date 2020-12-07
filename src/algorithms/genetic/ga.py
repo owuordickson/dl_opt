@@ -26,7 +26,7 @@ def run(problem, params):
     maxit = params.maxit
     npop = params.npop
     pc = params.pc
-    nc = np.round(pc * npop/2) * 2
+    nc = int(np.round(pc * npop/2) * 2)
     gamma = params.gamma
     mu = params.mu
     sigma = params.sigma
@@ -55,7 +55,7 @@ def run(problem, params):
     for it in range(maxit):
 
         popc = []
-        for k in range(nc//2):
+        for _ in range(nc//2):
             # Select Parents
             q = np.random.permutation(npop)
             p1 = pop[q[0]]
@@ -72,9 +72,36 @@ def run(problem, params):
             apply_bound(c1, varmin, varmax)
             apply_bound(c2, varmin, varmax)
 
+            # Evaluate First Offspring
+            c1.cost = costfunc(c1.position)
+            if c1.cost < bestsol.cost:
+                bestsol = c1.deepcopy()
+
+            # Evaluate Second Offspring
+            c2.cost = costfunc(c2.position)
+            if c2.cost < bestsol.cost:
+                bestsol = c2.deepcopy()
+
+            # Add Offsprings to popc
+            popc.append(c1)
+            popc.append(c2)
+
+        # Merge, Sort and Select
+        pop += popc
+        pop = sorted(pop, key=lambda x:x.cost)
+        pop = pop[0:npop]
+
+        # Store Best Cost
+        bestcost[it] = bestsol.cost
+
+        # Show Iteration Information
+        print("Iteration {}: Best Cost = {}".format(it, bestcost[it]))
+
     # Output
     out = structure()
     out.pop = pop
+    out.bestsol = bestsol
+    out.bestcost = bestcost
     return out
 
 
