@@ -14,6 +14,7 @@ Description: genetic heuristic algorithm that optimizes data lake jobs
 import numpy as np
 import matplotlib.pyplot as plt
 from ypstruct import structure
+import ga
 
 
 # Sphere test function
@@ -33,6 +34,6 @@ params.maxit = 100
 params.npop = 20
 
 # Run GA
-
+out = ga.run(problem, params)
 
 # Results
