@@ -3,7 +3,7 @@
 A greedy heuristic algorithm that optimizes data lake jobs.
 
 ### Requirements:
-You will be required to install the following python dependencies before using <em><strong>ACO</strong>-GRAANK</em> algorithm:<br>
+You will be required to install the following python dependencies before using <em><strong>DL-OPT</strong></em> algorithm:<br>
 ```
                    install python (version => 3.6)
 
