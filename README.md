@@ -1,5 +1,7 @@
 # DLOPT: Data Lake Optimization algorithm
 
+A greedy heuristic algorithm that optimizes data lake jobs.
+
 ### Requirements:
 You will be required to install the following python dependencies before using <em><strong>ACO</strong>-GRAANK</em> algorithm:<br>
 ```
