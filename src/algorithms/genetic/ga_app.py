@@ -17,9 +17,33 @@ from ypstruct import structure
 import ga
 
 
+# GA for demand-jobs
+def nodes_count(x):
+    return x
+
+
+def jobs_cost(c):
+    return c
+
+
+def cost_func(c, d):
+    return c * d
+
+
+# Demand: number of nodes, cost for every job (stored in matrix)
+demand = structure()
+demand.nodes = nodes_count
+demand.cost = jobs_cost
+
+# Jobs: number of nodes
+job = structure()
+job.max_nodes = nodes_count
+
+
 # Sphere test function
 def sphere(x):
     return sum(x**2)
+
 
 # Problem definition
 problem = structure()
