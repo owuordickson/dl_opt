@@ -14,7 +14,7 @@ Description: genetic heuristic algorithm that optimizes data lake jobs
 import numpy as np
 import matplotlib.pyplot as plt
 from ypstruct import structure
-import ga
+import ga_sample
 
 
 # GA for demand-jobs
@@ -26,8 +26,8 @@ def jobs_cost(c):
     return c
 
 
-def cost_func(c, d):
-    return c * d
+def cost_func(g, m):
+    return 0
 
 
 # Demand: number of nodes, cost for every job (stored in matrix)
@@ -46,11 +46,19 @@ def sphere(x):
 
 
 # Problem definition
-problem = structure()
-problem.costfunc = sphere
-problem.nvar = 5
-problem.varmin = -10
-problem.varmax = 10
+prob = structure()
+prob.costfunc = cost_func
+prob.vals = [1, 0]
+# prob.length = 0
+# prob.varmin = 0
+# prob.varmax = 1
+
+# Problem definition
+# problem = structure()
+# problem.costfunc = sphere
+# problem.nvar = 5
+# problem.varmin = -10
+# problem.varmax = 10
 
 # GA Parameters
 params = structure()
@@ -62,14 +70,18 @@ params.mu = 0.1
 params.sigma = 0.1
 
 # Run GA
-out = ga.run(problem, params)
+# out = ga.run(problem, params)
 
 # Results
 # plt.plot(out.bestcost)
-plt.semilogy(out.bestcost)
-plt.xlim(0, params.maxit)
-plt.xlabel('Iterations')
-plt.ylabel('Best Cost')
-plt.title('Genetic Algorithm (GA)')
-plt.grid(True)
-plt.show()
+#plt.semilogy(out.bestcost)
+#plt.xlim(0, params.maxit)
+#plt.xlabel('Iterations')
+#plt.ylabel('Best Cost')
+#plt.title('Genetic Algorithm (GA)')
+#plt.grid(True)
+#plt.show()
+
+for i in range(5):
+    gene = np.random.choice(a=prob.vals, size=(4,))
+    print(gene)

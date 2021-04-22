@@ -15,14 +15,12 @@ from ypstruct import structure
 
 
 def run(problem, params):
-    c_matrix = []
 
     # Problem Information
     costfunc = problem.costfunc
-    vals = problem.vals
-    gene_length = 15
-    # varmin = problem.varmin
-    # varmax = problem.varmax
+    nvar = problem.nvar
+    varmin = problem.varmin
+    varmax = problem.varmax
 
     # Parameters
     maxit = params.maxit
@@ -35,7 +33,7 @@ def run(problem, params):
 
     # Empty Individual Template
     empty_individual = structure()
-    empty_individual.gene = None
+    empty_individual.position = None
     empty_individual.cost = None
 
     # Best Solution Ever Found
@@ -45,8 +43,8 @@ def run(problem, params):
     # Initialize Population
     pop = empty_individual.repeat(npop)
     for i in range(npop):
-        pop[i].gene = np.random.choice(a=problem.vals, size=(gene_length,))
-        pop[i].cost = costfunc(pop[i].gene, c_matrix)
+        pop[i].position = np.random.uniform(varmin, varmax, nvar)
+        pop[i].cost = costfunc(pop[i].position)
         if pop[i].cost < bestsol.cost:
             bestsol = pop[i].deepcopy()
 
@@ -71,16 +69,16 @@ def run(problem, params):
             c2 = mutate(c2, mu, sigma)
 
             # Apply Bound
-            # apply_bound(c1, varmin, varmax)
-            # apply_bound(c2, varmin, varmax)
+            apply_bound(c1, varmin, varmax)
+            apply_bound(c2, varmin, varmax)
 
             # Evaluate First Offspring
-            c1.cost = costfunc(c1.gene, c_matrix)
+            c1.cost = costfunc(c1.position)
             if c1.cost < bestsol.cost:
                 bestsol = c1.deepcopy()
 
             # Evaluate Second Offspring
-            c2.cost = costfunc(c2.gene, c_matrix)
+            c2.cost = costfunc(c2.position)
             if c2.cost < bestsol.cost:
                 bestsol = c2.deepcopy()
 
@@ -124,7 +122,7 @@ def mutate(x, mu, sigma):
     return y
 
 
-# def apply_bound(x, varmin, varmax):
-#    x.position = np.maximum(x.position, varmin)
-#    x.position = np.minimum(x.position, varmax)
+def apply_bound(x, varmin, varmax):
+    x.position = np.maximum(x.position, varmin)
+    x.position = np.minimum(x.position, varmax)
 
