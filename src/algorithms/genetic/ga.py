@@ -29,9 +29,9 @@ def run(problem, params):
     npop = params.npop
     pc = params.pc
     nc = int(np.round(pc * npop/2) * 2)
-    gamma = params.gamma
-    mu = params.mu
-    sigma = params.sigma
+    # gamma = params.gamma
+    # mu = params.mu
+    # sigma = params.sigma
 
     # Empty Individual Template
     empty_individual = structure()
@@ -64,11 +64,11 @@ def run(problem, params):
             p2 = pop[q[1]]
 
             # Perform Crossover
-            c1, c2 = crossover(p1, p2, gamma)
+            c1, c2 = crossover(p1, p2)
 
             # Perform Mutation
-            c1 = mutate(c1, mu, sigma)
-            c2 = mutate(c2, mu, sigma)
+            c1 = mutate(c1)
+            c2 = mutate(c2)
 
             # Apply Bound
             # apply_bound(c1, varmin, varmax)
@@ -107,20 +107,29 @@ def run(problem, params):
     return out
 
 
-def crossover(p1, p2, gamma=0.1):
+def crossover(p1, p2):
     c1 = p1.deepcopy()
     c2 = p1.deepcopy()
-    alpha = np.random.uniform(-gamma, 1+gamma, *c1.position.shape)
-    c1.position = alpha*p1.position + (1-alpha)*p2.position
-    c2.position = alpha*p2.position + (1-alpha)*p1.position
+    # alpha = np.random.uniform(-gamma, 1+gamma, *c1.position.shape)
+    # c1.position = alpha*p1.position + (1-alpha)*p2.position
+    # c2.position = alpha*p2.position + (1-alpha)*p1.position
+    choice = np.random.randint(2, size=c1.size).reshape(c1.shape).astype(bool)
+    c1 = np.where(choice, p1, p2)
+    c2 = np.where(choice, p2, p1)
     return c1, c2
 
 
-def mutate(x, mu, sigma):
+def mutate(x):
     y = x.deepcopy()
-    flag = np.random.rand(*x.position.shape) <= mu
-    ind = np.argwhere(flag)
-    y.position[ind] += sigma*np.random.rand(*ind.shape)
+    # flag = np.random.rand(*x.position.shape) <= mu
+    # ind = np.argwhere(flag)
+    # y.position[ind] += sigma*np.random.rand(*ind.shape)
+
+    random_value = np.random.randint(0, x.shape[0])
+    if y[random_value] == 0:
+        y[random_value] = 1
+    else:
+        y[random_value] = 0
     return y
 
 
