@@ -74,19 +74,20 @@ params.pc = 1
 
 
 # c_matrix = np.array([[6, 4, 3, 5, 8], [9, 7, 4, 3, 4]])
-c_matrix = np.array([[6, 9], [4, 7], [3, 4], [5, 3], [8, 4]])
-demand = np.array([80, 270, 250, 160, 180])
-print(demand)
-print(c_matrix)
+# c_matrix = np.array([[6, 9], [4, 7], [3, 4], [5, 3], [8, 4]])
+# demand = np.array([80, 270, 250, 160, 180])
+# print(demand)
+# print(c_matrix)
 
 # for i in range(5):
-gene1 = np.random.choice(a=prob.vals, size=c_matrix.shape)
+# gene1 = np.random.choice(a=prob.vals, size=c_matrix.shape)
 # gene2 = np.random.choice(a=prob.vals, size=c_matrix.shape)
     # print(gene)
-
-print(gene1)
-print("\n")
+# gene1 = np.array([[1, 0], [1, 0], [1, 1], [0, 1], [0, 1]])
+# gene1 = ga.build_gene(prob, c_matrix.shape)
+# print(gene1)
+# print("\n")
 # print(ga.crossover(gene1, gene2))
 # print((ga.mutate(gene1)))
 
-print(cost_func(gene1, c_matrix, demand))
+# print(cost_func(gene1, c_matrix, demand))

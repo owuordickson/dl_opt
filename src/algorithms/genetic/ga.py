@@ -41,7 +41,7 @@ def run(problem, params):
     # Initialize Population
     pop = empty_individual.repeat(npop)
     for i in range(npop):
-        pop[i].gene = np.random.choice(a=problem.vals, size=c_matrix.shape)
+        pop[i].gene = build_gene(problem, c_matrix.shape)
         pop[i].cost = costfunc(pop[i].gene, c_matrix, u_demand)
         if pop[i].cost < bestsol.cost:
             bestsol = pop[i].deepcopy()
@@ -122,3 +122,10 @@ def mutate(x):
         y[rand_val_1, rand_val_2] = 0
     return y
 
+
+def build_gene(prob, shape):
+    temp_gene = []
+    for i in range(shape[0]):
+        temp = np.random.choice(a=prob.vals, size=(shape[1],))
+        temp_gene.append(temp)
+    return np.array(temp_gene)
