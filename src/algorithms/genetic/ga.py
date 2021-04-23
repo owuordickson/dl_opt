@@ -48,6 +48,7 @@ def run(problem, params):
 
     # Best Cost of Iteration
     bestcost = np.empty(maxit)
+    bestgene = [] #np.empty(maxit)
 
     # Main Loop
     for it in range(maxit):
@@ -91,8 +92,10 @@ def run(problem, params):
 
         # Store Best Cost
         bestcost[it] = bestsol.cost
+        bestgene.append(bestsol.gene)
 
         # Show Iteration Information
+        # print("Iteration {}: Best Cost = {}, Best Gene = {}".format(it, bestcost[it], bestgene[it]))
         print("Iteration {}: Best Cost = {}".format(it, bestcost[it]))
 
     # Output
