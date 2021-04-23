@@ -106,20 +106,20 @@ def run(problem, params):
 def crossover(p1, p2):
     c1 = p1.copy()
     c2 = p1.copy()
-    choice = np.random.randint(2, size=c1.size).reshape(c1.shape).astype(bool)
-    c1 = np.where(choice, p1, p2)
-    c2 = np.where(choice, p2, p1)
+    choice = np.random.randint(2, size=c1.gene.size).reshape(c1.gene.shape).astype(bool)
+    c1.gene = np.where(choice, p1.gene, p2.gene)
+    c2.gene = np.where(choice, p2.gene, p1.gene)
     return c1, c2
 
 
 def mutate(x):
     y = x.copy()
-    rand_val_1 = np.random.randint(0, x.shape[0])
-    rand_val_2 = np.random.randint(0, x.shape[1])
-    if y[rand_val_1, rand_val_2] == 0:
-        y[rand_val_1, rand_val_2] = 1
+    rand_val_1 = np.random.randint(0, x.gene.shape[0])
+    rand_val_2 = np.random.randint(0, x.gene.shape[1])
+    if y.gene[rand_val_1, rand_val_2] == 0:
+        y.gene[rand_val_1, rand_val_2] = 1
     else:
-        y[rand_val_1, rand_val_2] = 0
+        y.gene[rand_val_1, rand_val_2] = 0
     return y
 
 

@@ -49,9 +49,9 @@ def cost_func(gene, c_matrix, u_demand):
 
 
 # Problem definition
-prob = structure()
-prob.costfunc = cost_func
-prob.vals = [1, 0]
+problem = structure()
+problem.costfunc = cost_func
+problem.vals = [1, 0]
 
 # GA Parameters
 params = structure()
@@ -60,17 +60,17 @@ params.npop = 20
 params.pc = 1
 
 # Run GA
-# out = ga.run(problem, params)
+out = ga.run(problem, params)
 
 # Results
-# plt.plot(out.bestcost)
-#plt.semilogy(out.bestcost)
-#plt.xlim(0, params.maxit)
-#plt.xlabel('Iterations')
-#plt.ylabel('Best Cost')
-#plt.title('Genetic Algorithm (GA)')
-#plt.grid(True)
-#plt.show()
+plt.plot(out.bestcost)
+plt.semilogy(out.bestcost)
+plt.xlim(0, params.maxit)
+plt.xlabel('Iterations')
+plt.ylabel('Best Cost')
+plt.title('Genetic Algorithm (GA)')
+plt.grid(True)
+plt.show()
 
 
 # c_matrix = np.array([[6, 4, 3, 5, 8], [9, 7, 4, 3, 4]])
