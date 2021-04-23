@@ -15,23 +15,19 @@ from ypstruct import structure
 
 
 def run(problem, params):
-    c_matrix = []
+    c_matrix = np.array([[6, 9], [4, 7], [3, 4], [5, 3], [8, 4]])
+    u_demand = np.array([80, 270, 250, 160, 180])
 
     # Problem Information
     costfunc = problem.costfunc
     vals = problem.vals
     gene_length = 15
-    # varmin = problem.varmin
-    # varmax = problem.varmax
 
     # Parameters
     maxit = params.maxit
     npop = params.npop
     pc = params.pc
     nc = int(np.round(pc * npop/2) * 2)
-    # gamma = params.gamma
-    # mu = params.mu
-    # sigma = params.sigma
 
     # Empty Individual Template
     empty_individual = structure()
@@ -45,8 +41,8 @@ def run(problem, params):
     # Initialize Population
     pop = empty_individual.repeat(npop)
     for i in range(npop):
-        pop[i].gene = np.random.choice(a=problem.vals, size=(gene_length,))
-        pop[i].cost = costfunc(pop[i].gene, c_matrix)
+        pop[i].gene = np.random.choice(a=problem.vals, size=c_matrix.shape)
+        pop[i].cost = costfunc(pop[i].gene, c_matrix, u_demand)
         if pop[i].cost < bestsol.cost:
             bestsol = pop[i].deepcopy()
 
@@ -75,12 +71,12 @@ def run(problem, params):
             # apply_bound(c2, varmin, varmax)
 
             # Evaluate First Offspring
-            c1.cost = costfunc(c1.gene, c_matrix)
+            c1.cost = costfunc(c1.gene, c_matrix, u_demand)
             if c1.cost < bestsol.cost:
                 bestsol = c1.deepcopy()
 
             # Evaluate Second Offspring
-            c2.cost = costfunc(c2.gene, c_matrix)
+            c2.cost = costfunc(c2.gene, c_matrix, u_demand)
             if c2.cost < bestsol.cost:
                 bestsol = c2.deepcopy()
 
@@ -108,11 +104,8 @@ def run(problem, params):
 
 
 def crossover(p1, p2):
-    c1 = p1.deepcopy()
-    c2 = p1.deepcopy()
-    # alpha = np.random.uniform(-gamma, 1+gamma, *c1.position.shape)
-    # c1.position = alpha*p1.position + (1-alpha)*p2.position
-    # c2.position = alpha*p2.position + (1-alpha)*p1.position
+    c1 = p1.copy()
+    c2 = p1.copy()
     choice = np.random.randint(2, size=c1.size).reshape(c1.shape).astype(bool)
     c1 = np.where(choice, p1, p2)
     c2 = np.where(choice, p2, p1)
@@ -120,20 +113,12 @@ def crossover(p1, p2):
 
 
 def mutate(x):
-    y = x.deepcopy()
-    # flag = np.random.rand(*x.position.shape) <= mu
-    # ind = np.argwhere(flag)
-    # y.position[ind] += sigma*np.random.rand(*ind.shape)
-
-    random_value = np.random.randint(0, x.shape[0])
-    if y[random_value] == 0:
-        y[random_value] = 1
+    y = x.copy()
+    rand_val_1 = np.random.randint(0, x.shape[0])
+    rand_val_2 = np.random.randint(0, x.shape[1])
+    if y[rand_val_1, rand_val_2] == 0:
+        y[rand_val_1, rand_val_2] = 1
     else:
-        y[random_value] = 0
+        y[rand_val_1, rand_val_2] = 0
     return y
-
-
-# def apply_bound(x, varmin, varmax):
-#    x.position = np.maximum(x.position, varmin)
-#    x.position = np.minimum(x.position, varmax)
 

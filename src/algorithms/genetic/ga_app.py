@@ -14,7 +14,7 @@ Description: genetic heuristic algorithm that optimizes data lake jobs
 import numpy as np
 import matplotlib.pyplot as plt
 from ypstruct import structure
-import ga_sample
+import ga
 
 
 # GA for demand-jobs
@@ -26,48 +26,38 @@ def jobs_cost(c):
     return c
 
 
-def cost_func(g, m):
-    return 0
+def cost_func(gene, c_matrix, u_demand):
+    cost = 0
+    for i in range(gene.shape[0]):
+        # u = gene[i]
+        total = np.sum(gene[i])
+        if total == 0:
+            return np.inf
+        for j in range(gene.shape[1]):
+            cost += (gene[i][j]/total) * c_matrix[i][j] * u_demand[i]
+    return cost
 
 
 # Demand: number of nodes, cost for every job (stored in matrix)
-demand = structure()
-demand.nodes = nodes_count
-demand.cost = jobs_cost
+# demand = structure()
+# demand.nodes = nodes_count
+# demand.cost = jobs_cost
 
 # Jobs: number of nodes
-job = structure()
-job.max_nodes = nodes_count
-
-
-# Sphere test function
-def sphere(x):
-    return sum(x**2)
+# job = structure()
+# job.max_nodes = nodes_count
 
 
 # Problem definition
 prob = structure()
 prob.costfunc = cost_func
 prob.vals = [1, 0]
-# prob.length = 0
-# prob.varmin = 0
-# prob.varmax = 1
-
-# Problem definition
-# problem = structure()
-# problem.costfunc = sphere
-# problem.nvar = 5
-# problem.varmin = -10
-# problem.varmax = 10
 
 # GA Parameters
 params = structure()
 params.maxit = 100
 params.npop = 20
 params.pc = 1
-# params.gamma = 0.1
-# params.mu = 0.1
-# params.sigma = 0.1
 
 # Run GA
 # out = ga.run(problem, params)
@@ -82,6 +72,21 @@ params.pc = 1
 #plt.grid(True)
 #plt.show()
 
-for i in range(5):
-    gene = np.random.choice(a=prob.vals, size=(4,))
-    print(gene)
+
+# c_matrix = np.array([[6, 4, 3, 5, 8], [9, 7, 4, 3, 4]])
+c_matrix = np.array([[6, 9], [4, 7], [3, 4], [5, 3], [8, 4]])
+demand = np.array([80, 270, 250, 160, 180])
+print(demand)
+print(c_matrix)
+
+# for i in range(5):
+gene1 = np.random.choice(a=prob.vals, size=c_matrix.shape)
+# gene2 = np.random.choice(a=prob.vals, size=c_matrix.shape)
+    # print(gene)
+
+print(gene1)
+print("\n")
+# print(ga.crossover(gene1, gene2))
+# print((ga.mutate(gene1)))
+
+print(cost_func(gene1, c_matrix, demand))
